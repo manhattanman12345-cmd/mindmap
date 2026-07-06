@@ -1,6 +1,6 @@
 // キャッシュ優先の簡易 Service Worker (ビルドごとに更新)
-const C = "mindmap-v1783345926246";
-const ASSETS = ["./", "./index.html", "./assets/index-app.js", "./manifest.webmanifest", "./icon.png"];
+const C = "mindmap-v1783349560090";
+const ASSETS = ["./", "./index.html", "./index-app.js", "./manifest.webmanifest", "./icon.png"];
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(C).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
 });
