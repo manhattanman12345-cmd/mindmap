@@ -1,7 +1,11 @@
 {
   "name": "マインドマップ",
   "short_name": "マインドマップ",
+  "description": "考えを整理し、実践と行動につなげるマインドマップ",
+  "lang": "ja",
+  "id": "./",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#4f46e5",

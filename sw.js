@@ -1,5 +1,5 @@
-// キャッシュ優先の簡易 Service Worker (ビルドごとに更新)
-const C = "mindmap-v1783349560090";
+// オンライン時は最新版、オフライン時はキャッシュを使用する Service Worker
+const C = "mindmap-1.1.0-1783608522226";
 const ASSETS = ["./", "./index.html", "./index-app.js", "./manifest.webmanifest", "./icon.png"];
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(C).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
@@ -10,6 +10,17 @@ self.addEventListener("activate", (e) => {
     .then(() => self.clients.claim()));
 });
 self.addEventListener("fetch", (e) => {
-  if (e.request.method !== "GET") return;
-  e.respondWith(caches.match(e.request, { ignoreSearch: true }).then((r) => r || fetch(e.request)));
+  if (e.request.method !== "GET" || new URL(e.request.url).origin !== location.origin) return;
+  e.respondWith(
+    fetch(e.request)
+      .then((response) => {
+        if (response.ok) {
+          const copy = response.clone();
+          caches.open(C).then((cache) => cache.put(e.request, copy));
+        }
+        return response;
+      })
+      .catch(() => caches.match(e.request, { ignoreSearch: true })
+        .then((cached) => cached || caches.match("./index.html")))
+  );
 });
