@@ -1,5 +1,5 @@
 // オンライン時は最新版、オフライン時はキャッシュを使用する Service Worker
-const C = "mindmap-1.41.0-1784174528941";
+const C = "mindmap-1.42.0-1784298834696";
 const ASSETS = ["./", "./index.html", "./index-app.js", "./manifest.webmanifest", "./icon.png"];
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(C).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
